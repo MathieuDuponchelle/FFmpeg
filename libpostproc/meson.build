@@ -1,5 +1,5 @@
 libpostproc_majorver = '55'
-minorver = '0'
+minorver = '1'
 microver = '100'
 
 libpostproc_version = libpostproc_majorver + '.' + minorver + '.' + microver

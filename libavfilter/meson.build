@@ -1,5 +1,5 @@
 libavfilter_majorver = '7'
-minorver = '12'
+minorver = '16'
 microver = '100'
 
 libavfilter_version = libavfilter_majorver + '.' + minorver + '.' + microver
