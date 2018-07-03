@@ -6,7 +6,7 @@ libavformat_version = libavformat_majorver + '.' + minorver + '.' + microver
 
 cc = meson.get_compiler('c')
 
-libavformat_sources = files([
+libavformat_sources = files(
   'allformats.c',
   'avio.c',
   'aviobuf.c',
@@ -26,7 +26,7 @@ libavformat_sources = files([
   'url.c',
   'utils.c',
   'file_open.c',
-])
+)
 
 libavformat_optional_sources = {
   'a64_muxer' : files('a64.c','rawenc.c'),
@@ -233,7 +233,6 @@ libavformat_optional_sources = {
   'image_tiff_pipe_demuxer' : files('img2dec.c','img2.c'),
   'image_webp_pipe_demuxer' : files('img2dec.c','img2.c'),
   'image_xpm_pipe_demuxer' : files('img2dec.c','img2.c'),
-  'image_xwd_pipe_demuxer' : files('img2dec.c','img2.c'),
   'ingenient_demuxer' : files('ingenientdec.c','rawdec.c'),
   'ipmovie_demuxer' : files('ipmovie.c'),
   'ircam_demuxer' : files('ircamdec.c','ircam.c','pcm.c'),
@@ -471,7 +470,7 @@ libavformat_optional_sources = {
   'thp_demuxer' : files('thp.c'),
   'threedostr_demuxer' : files('3dostr.c'),
   'tiertexseq_demuxer' : files('tiertexseq.c'),
-  'tls_protocol' : files('tls.c'),
+  'tls_protocol' : files('tls.c',),
   'tmv_demuxer' : files('tmv.c'),
   'truehd_demuxer' : files('rawdec.c','mlpdec.c'),
   'truehd_muxer' : files('rawenc.c'),
@@ -487,7 +486,6 @@ libavformat_optional_sources = {
   'v210x_demuxer' : files('v210.c'),
   'v210_demuxer' : files('v210.c'),
   'vag_demuxer' : files('vag.c'),
-  'vapoursynth_demuxer' : files('vapoursynth.c'),
   'vc1t_demuxer' : files('vc1test.c'),
   'vc1t_muxer' : files('vc1testenc.c'),
   'vc1_demuxer' : files('rawdec.c','vc1dec.c'),
@@ -536,24 +534,24 @@ libavformat_mmx_optional_sources = {
 }
 
 libavformat_tests = [
-  # ['seek', files(['tests/seek.c'])],
-  ['url', files(['tests/url.c'])],
+  # ['seek', files('tests/seek.c')],
+  ['url', files('tests/url.c')],
 ]
 
 libavformat_optional_tests = {
   'ffrtmpcrypt_protocol' : [
-    ['rtmpdh', files(['tests/rtmpdh.c'])],
+    ['rtmpdh', files('tests/rtmpdh.c')],
   ],
   'fifo_muxer' : [
   ],
   'mov_muxer' : [
-    ['movenc', files(['tests/movenc.c'])],
+    ['movenc', files('tests/movenc.c')],
   ],
   'network' : [
-    ['noproxy', files(['tests/noproxy.c'])],
+    ['noproxy', files('tests/noproxy.c')],
   ],
   'srtp' : [
-    ['srtp', files(['tests/srtp.c'])],
+    ['srtp', files('tests/srtp.c')],
   ],
 }
 

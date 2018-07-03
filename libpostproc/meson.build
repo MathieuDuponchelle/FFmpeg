@@ -4,9 +4,9 @@ microver = '100'
 
 libpostproc_version = libpostproc_majorver + '.' + minorver + '.' + microver
 
-libpostproc_sources = files([
+libpostproc_sources = files(
   'postprocess.c',
-])
+)
 
 # Version file
 ver_conf = configuration_data()

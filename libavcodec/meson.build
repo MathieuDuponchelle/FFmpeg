@@ -6,7 +6,7 @@ libavcodec_version = libavcodec_majorver + '.' + minorver + '.' + microver
 
 cc = meson.get_compiler('c')
 
-libavcodec_sources = files([
+libavcodec_sources = files(
   'ac3_parser.c',
   'adts_parser.c',
   'allcodecs.c',
@@ -41,7 +41,7 @@ libavcodec_sources = files([
   'pthread.c',
   'pthread_slice.c',
   'pthread_frame.c',
-])
+)
 
 libavcodec_optional_sources = {
   'a64multi5_encoder' : files('a64multienc.c','elbg.c'),
@@ -186,7 +186,6 @@ libavcodec_optional_sources = {
   'cbs_h264' : files('cbs_h2645.c','h2645_parse.c'),
   'cbs_h265' : files('cbs_h2645.c','h2645_parse.c'),
   'cbs_mpeg2' : files('cbs_mpeg2.c'),
-  'cbs_vp9' : files('cbs_vp9.c'),
   'ccaption_decoder' : files('ccaption_dec.c'),
   'cdgraphics_decoder' : files('cdgraphics.c'),
   'cdxl_decoder' : files('cdxl.c'),
@@ -274,7 +273,7 @@ libavcodec_optional_sources = {
   'faandct' : files('faandct.c'),
   'faanidct' : files('faanidct.c'),
   'fdctdsp' : files('fdctdsp.c','jfdctfst.c','jfdctint.c'),
-  'fft' : files('avfft.c','fft_fixed.c','fft_float.c','fft_fixed_32.c','fft_init_table.c'),
+  'fft' : files('avfft.c','fft_fixed.c','fft_float.c','fft_fixed_32.c','fft_init_table.c',),
   'ffv1_decoder' : files('ffv1dec.c','ffv1.c'),
   'ffv1_encoder' : files('ffv1enc.c','ffv1.c'),
   'ffwavesynth_decoder' : files('ffwavesynth.c'),
@@ -462,7 +461,7 @@ libavcodec_optional_sources = {
   'libx264_encoder' : files('libx264.c'),
   'libx265_encoder' : files('libx265.c'),
   'libxavs_encoder' : files('libxavs.c'),
-  'libxvid_encoder' : files('libxvid.c'),
+  'libxvid_encoder' : files('libxvid.c','libxvid_rc.c'),
   'libzvbi_teletext_decoder' : files('libzvbi-teletextdec.c','ass.c'),
   'ljpeg_encoder' : files('ljpegenc.c','mjpegenc_common.c'),
   'llauddsp' : files('lossless_audiodsp.c'),
@@ -701,6 +700,7 @@ libavcodec_optional_sources = {
   'prores_decoder' : files('proresdec2.c','proresdsp.c','proresdata.c'),
   'prores_encoder' : files('proresenc_anatoliy.c'),
   'prores_ks_encoder' : files('proresenc_kostya.c','proresdata.c'),
+  'prores_lgpl_decoder' : files('proresdec_lgpl.c','proresdsp.c','proresdata.c'),
   'psd_decoder' : files('psd.c'),
   'ptx_decoder' : files('ptx.c'),
   'qcelp_decoder' : files('qcelpdec.c','celp_filters.c','acelp_vectors.c','acelp_filters.c'),
@@ -891,7 +891,6 @@ libavcodec_optional_sources = {
   'vp9_decoder' : files('vp9.c','vp9data.c','vp9dsp.c','vp9lpf.c','vp9recon.c','vp9block.c','vp9prob.c','vp9mvs.c','vp56rac.c','vp9dsp_8bpp.c','vp9dsp_10bpp.c','vp9dsp_12bpp.c'),
   'vp9_dxva2_hwaccel' : files('dxva2_vp9.c'),
   'vp9_mediacodec_decoder' : files('mediacodecdec.c'),
-  'vp9_metadata_bsf' : files('vp9_metadata_bsf.c'),
   'vp9_nvdec_hwaccel' : files('nvdec_vp9.c'),
   'vp9_parser' : files('vp9_parser.c'),
   'vp9_raw_reorder_bsf' : files('vp9_raw_reorder_bsf.c'),
@@ -964,15 +963,15 @@ libavcodec_mmx_optional_sources = {
 }
 
 libavcodec_tests = [
-  ['avpacket', files(['tests/avpacket.c'])],
-  ['codec_desc', files(['tests/codec_desc.c'])],
-  ['htmlsubtitles', files(['tests/htmlsubtitles.c'])],
-  ['imgconvert', files(['tests/imgconvert.c'])],
-  ['jpeg2000dwt', files(['tests/jpeg2000dwt.c'])],
-  ['mathops', files(['tests/mathops.c'])],
-  ['options', files(['tests/options.c'])],
-  ['mjpegenc_huffman', files(['tests/mjpegenc_huffman.c'])],
-  ['utils', files(['tests/utils.c'])],
+  ['avpacket', files('tests/avpacket.c')],
+  ['codec_desc', files('tests/codec_desc.c')],
+  ['htmlsubtitles', files('tests/htmlsubtitles.c')],
+  ['imgconvert', files('tests/imgconvert.c')],
+  ['jpeg2000dwt', files('tests/jpeg2000dwt.c')],
+  ['mathops', files('tests/mathops.c')],
+  ['options', files('tests/options.c')],
+  ['mjpegenc_huffman', files('tests/mjpegenc_huffman.c')],
+  ['utils', files('tests/utils.c')],
 ]
 
 # log2 calculations fail on Windows, not a meson problem afaict
@@ -982,36 +981,36 @@ endif
 
 libavcodec_optional_tests = {
   'cabac' : [
-    ['cabac', files(['tests/cabac.c'])],
+    ['cabac', files('tests/cabac.c')],
   ],
   'dct' : [
-    ['avfft', files(['tests/avfft.c'])],
+    ['avfft', files('tests/avfft.c')],
   ],
   'fft' : [
-    ['fft', files(['tests/fft.c'])],
-    ['fft-fixed', files(['tests/fft-fixed.c'])],
-    ['fft-fixed32', files(['tests/fft-fixed32.c'])],
+    ['fft', files('tests/fft.c')],
+    ['fft-fixed', files('tests/fft-fixed.c')],
+    ['fft-fixed32', files('tests/fft-fixed32.c')],
   ],
   'golomb' : [
-    ['golomb', files(['tests/golomb.c'])],
+    ['golomb', files('tests/golomb.c')],
   ],
   'idctdsp' : [
     ['dct', files(['tests/dct.c', 'dctref.c'])],
   ],
   'iirfilter' : [
-    ['iirfilter', files(['tests/iirfilter.c'])],
+    ['iirfilter', files('tests/iirfilter.c')],
   ],
   'mmx' : [
-    ['motion', files(['tests/motion.c'])],
+    ['motion', files('tests/motion.c')],
   ],
   'mpegvideo' : [
-    ['mpeg12framerate', files(['tests/mpeg12framerate.c'])],
+    ['mpeg12framerate', files('tests/mpeg12framerate.c')],
   ],
   'rangecoder' : [
-    ['rangecoder', files(['tests/rangecoder.c'])],
+    ['rangecoder', files('tests/rangecoder.c')],
   ],
   'snow_encoder' : [
-    ['snowenc', files(['tests/snowenc.c'])],
+    ['snowenc', files('tests/snowenc.c')],
   ],
 }
 

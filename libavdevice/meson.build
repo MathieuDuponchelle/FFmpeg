@@ -6,12 +6,12 @@ libavdevice_version = libavdevice_majorver + '.' + minorver + '.' + microver
 
 cc = meson.get_compiler('c')
 
-libavdevice_sources = files([
+libavdevice_sources = files(
   'alldevices.c',
   'avdevice.c',
   'utils.c',
   'file_open.c',
-])
+)
 
 libavdevice_optional_sources = {
   'alsa_indev' : files('alsa_dec.c','alsa.c','timefilter.c'),
@@ -59,7 +59,7 @@ libavdevice_mmx_optional_sources = {
 
 libavdevice_optional_tests = {
   'jack_indev' : [
-    ['timefilter', files(['tests/timefilter.c'])],
+    ['timefilter', files('tests/timefilter.c')],
   ],
 }
 

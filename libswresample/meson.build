@@ -4,7 +4,7 @@ microver = '101'
 
 libswresample_version = libswresample_majorver + '.' + minorver + '.' + microver
 
-libswresample_sources = files([
+libswresample_sources = files(
   'audioconvert.c',
   'dither.c',
   'options.c',
@@ -13,17 +13,25 @@ libswresample_sources = files([
   'resample_dsp.c',
   'swresample.c',
   'swresample_frame.c',
-])
+)
 
 libswresample_optional_sources = {
   'libsoxr' : files('soxr_resample.c'),
   'shared' : files('log2_tab.c'),
 }
 
+libswresample_x86asm_optional_sources = {
+}
+
+libswresample_mmx_optional_sources = {
+}
+
 libswresample_tests = [
-  ['swresample', files(['tests/swresample.c'])],
+  ['swresample', files('tests/swresample.c')],
 ]
 
+libswresample_optional_tests = {
+}
 # Version file
 ver_conf = configuration_data()
 ver_conf.set('majorver', libswresample_majorver)
