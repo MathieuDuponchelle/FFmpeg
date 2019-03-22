@@ -547,31 +547,37 @@ void ff_mpeg1_encode_picture_header(MpegEncContext *s, int picture_number)
     }
 
     if (s->codec_id == AV_CODEC_ID_MPEG2VIDEO && s->a53_cc) {
-        side_data = av_frame_get_side_data(s->current_picture_ptr->f,
-            AV_FRAME_DATA_A53_CC);
-        if (side_data) {
-            if (side_data->size <= A53_MAX_CC_COUNT * 3 && side_data->size % 3 == 0) {
-                int i = 0;
+        int i;
 
-                put_header (s, USER_START_CODE);
+        for (i = 0; i < s->current_picture_ptr->f->nb_side_data; i++) {
+            side_data = s->current_picture_ptr->f->side_data[i];
+            if (side_data->type != AV_FRAME_DATA_A53_CC)
+              continue;
 
-                put_bits(&s->pb, 8, 'G');                   // user_identifier
-                put_bits(&s->pb, 8, 'A');
-                put_bits(&s->pb, 8, '9');
-                put_bits(&s->pb, 8, '4');
-                put_bits(&s->pb, 8, 3);                     // user_data_type_code
-                put_bits(&s->pb, 8,
-                    (side_data->size / 3 & A53_MAX_CC_COUNT) | 0x40); // flags, cc_count
-                put_bits(&s->pb, 8, 0xff);                  // em_data
+            if (side_data) {
+                if (side_data->size <= A53_MAX_CC_COUNT * 3 && side_data->size % 3 == 0) {
+                    int i = 0;
 
-                for (i = 0; i < side_data->size; i++)
-                    put_bits(&s->pb, 8, side_data->data[i]);
+                    put_header (s, USER_START_CODE);
 
-                put_bits(&s->pb, 8, 0xff);                  // marker_bits
-            } else {
-                av_log(s->avctx, AV_LOG_WARNING,
-                    "Warning Closed Caption size (%d) can not exceed 93 bytes "
-                    "and must be a multiple of 3\n", side_data->size);
+                    put_bits(&s->pb, 8, 'G');                   // user_identifier
+                    put_bits(&s->pb, 8, 'A');
+                    put_bits(&s->pb, 8, '9');
+                    put_bits(&s->pb, 8, '4');
+                    put_bits(&s->pb, 8, 3);                     // user_data_type_code
+                    put_bits(&s->pb, 8,
+                        (side_data->size / 3 & A53_MAX_CC_COUNT) | 0x40); // flags, cc_count
+                    put_bits(&s->pb, 8, 0xff);                  // em_data
+
+                    for (i = 0; i < side_data->size; i++)
+                        put_bits(&s->pb, 8, side_data->data[i]);
+
+                    put_bits(&s->pb, 8, 0xff);                  // marker_bits
+                } else {
+                    av_log(s->avctx, AV_LOG_WARNING,
+                        "Warning Closed Caption size (%d) can not exceed 93 bytes "
+                        "and must be a multiple of 3\n", side_data->size);
+                }
             }
         }
     }
